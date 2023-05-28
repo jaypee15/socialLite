@@ -5,7 +5,8 @@ import SimpleLayout from './layouts/simple';
 //
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
-import LoginPage from './pages/LoginPage';
+import SigninPage from './pages/SigninPage';
+import SignupPage from './pages/SignupPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
@@ -26,8 +27,12 @@ export default function Router() {
       ],
     },
     {
-      path: 'login',
-      element: <LoginPage />,
+      path: 'Signin',
+      element: <SigninPage />,
+    },
+    {
+      path: 'SignUp',
+      element: <SignupPage />,
     },
     {
       element: <SimpleLayout />,
