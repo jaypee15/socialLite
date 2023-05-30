@@ -1,5 +1,5 @@
-// import React, { useState, componentDidMount } from 'react';
-// import {account} from '../../../appwrite/appwriteConfig';
+import React, {useState, useEffect} from 'react'
+import {account} from '../../appwrite/appwriteConfig'
 
 // const Posts = () => {
 //   const [posts, setPosts] = useState([]);
@@ -36,5 +36,25 @@
 // export default Posts;
 
 export default function Posts(){
-  return <h1>posts</h1>
+
+  const [userDetails, setUserDetails] = useState()
+
+    useEffect(() => {
+      const getData = account.get()
+      getData.then(
+        function(response){
+            setUserDetails(response)
+            //console.log(userDetails);
+        },
+        function(error){
+            console.log(error);
+        }
+      )
+    }, [])
+
+  return (
+      <>
+
+      </>
+  );
 }

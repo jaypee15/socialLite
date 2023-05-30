@@ -7,8 +7,8 @@ import Feed from '../components/feed/Feed';
 
 // ----------------------------------------------------------------------
 
-export default function DashboardAppPage() {
-  const theme = useTheme();
+export default function HomePage() {
+  
 
   return (
     <>

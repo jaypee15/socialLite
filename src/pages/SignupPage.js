@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as RouterLink} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import {  } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Container, Typography, Divider, Stack, Button, IconButton, InputAdornment, TextField, } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
@@ -72,7 +72,7 @@ const signupUser = async(e) => {
     function(response) {
       //signup successfull
       console.log(response);
-      navigate("/profile")
+      navigate("/home/profile")
 
     },
     function(error) {
@@ -84,14 +84,12 @@ const signupUser = async(e) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  // const handleClick = () => {
-  //   navigate('/dashboard', { replace: true });
-  // };
+
 
   return (
     <>
       <Helmet>
-        <title> Login | SocialLite </title>
+        <title> Signup | SocialLite </title>
       </Helmet>
 
       <StyledRoot>
@@ -118,14 +116,57 @@ const signupUser = async(e) => {
               Sign Up to SocialLite
             </Typography>
 
-            <Typography variant="body2" sx={{ mb: 5 }}>
-              Already have an account? {''}
-              <Link variant="subtitle2">Signin</Link>
-            </Typography>
+           
 
             
 
-            <Divider sx={{ my: 3 }}>
+           
+
+            <Stack spacing={3}>
+          <TextField name="name" label="User name"
+          onChange={(e) => {
+            setUser({
+                ...user,
+                name: e.target.value
+            })
+        }} />
+        <TextField name="email" label="Email address" 
+        onChange={(e) => {
+          setUser({
+              ...user,
+              email: e.target.value
+          })
+      }}/>
+        
+
+        <TextField
+          name="password"
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
+          onChange={(e) => {
+            setUser({
+                ...user,
+                password: e.target.value
+            })
+        }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Stack>
+
+      
+
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={signupUser}>
+        SignUp
+      </LoadingButton> 
+      <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 OR
               </Typography>
@@ -143,39 +184,14 @@ const signupUser = async(e) => {
                 <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={22} height={22} />
               </Button>
             </Stack>
-
-            <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
-
-        <TextField
-          name="password"
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Stack>
-
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <Checkbox name="remember" label="Remember me" />
-        <Link variant="subtitle2" underline="hover">
-          Forgot password?
-        </Link>
-      </Stack>
-
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={signupUser}>
-        Login
-      </LoadingButton> 
+      <Typography variant="body2" sx={{ mb: 5 }}>
+              Already have an account? {''}
+              <Link component={RouterLink} to="/signin">SignIn</Link>
+            </Typography>
           </StyledContent>
         </Container>
       </StyledRoot>
+      
     </>
   );
 }

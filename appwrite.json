@@ -1,0 +1,35 @@
+{
+    "projectId": "646e214b79f3833cb411",
+    "projectName": "socialLite",
+    "functions": [
+        {
+            "$id": "6476683120a91fbde0eb",
+            "name": "likePostById",
+            "runtime": "node-16.0",
+            "path": "functions/likePostById",
+            "entrypoint": "src/index.js",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        },
+        {
+            "$id": "64766aafd15be75c81a7",
+            "name": "likePost",
+            "runtime": "python-3.9",
+            "path": "functions/likePost",
+            "entrypoint": "src/index.py",
+            "ignore": [
+                "__pypackages__"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}

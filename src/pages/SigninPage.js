@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import {  } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
+import { Link, Container, Typography, Divider, Stack, Button, IconButton, InputAdornment, TextField, } from '@mui/material';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
 import Logo from '../components/logo';
 import Iconify from '../components/iconify';
 
-
+//appwrite
+import { account } from '../appwrite/appwriteConfig'; 
 
 
 // ----------------------------------------------------------------------
@@ -45,16 +46,30 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function SigninPage() {
   const mdUp = useResponsive('up', 'md');
 
   const navigate = useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+})
+
+//signin
+  const signinUser = async (e) => {
+    e.preventDefault()
+    try{
+      await account.createEmailSession(user.email, user.password)
+      navigate("/home/profile")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
-    navigate('/dashboard', { replace: true });
-  };
 
   return (
     <>
@@ -74,7 +89,7 @@ export default function LoginPage() {
         {mdUp && (
           <StyledSection>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome 
+              Hi, Welcome Back
             </Typography>
             <img src="/assets/illustrations/illustration_login.png" alt="login" />
           </StyledSection>
@@ -83,17 +98,58 @@ export default function LoginPage() {
         <Container maxWidth="sm">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign Up to SocialLite
+              Sign In to SocialLite
             </Typography>
 
-            <Typography variant="body2" sx={{ mb: 5 }}>
-              Already have an account? {''}
-              <Link variant="subtitle2">Signin</Link>
-            </Typography>
+           
 
             
 
-            <Divider sx={{ my: 3 }}>
+           
+
+            <Stack spacing={3}>
+        <TextField name="email" label="Email address" 
+        onChange={(e) => {
+          setUser({
+              ...user,
+              email: e.target.value
+          })
+      }}/>
+        
+
+        <TextField
+          name="password"
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
+          onChange={(e) => {
+            setUser({
+                ...user,
+                password: e.target.value
+            })
+        }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Stack>
+
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        
+        <Link variant="subtitle2" underline="hover">
+          Forgot password?
+        </Link>
+      </Stack>
+
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={signinUser}>
+        SignIn
+      </LoadingButton> 
+      <Divider sx={{ my: 3 }}>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 OR
               </Typography>
@@ -111,36 +167,10 @@ export default function LoginPage() {
                 <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={22} height={22} />
               </Button>
             </Stack>
-
-            <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
-
-        <TextField
-          name="password"
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Stack>
-
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-        <Checkbox name="remember" label="Remember me" />
-        <Link variant="subtitle2" underline="hover">
-          Forgot password?
-        </Link>
-      </Stack>
-
-      <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
-        Login
-      </LoadingButton> 
+      <Typography variant="body2" sx={{ mb: 5 }}>
+              Don't have an account? {''}
+              <Link component={RouterLink} to="/signup">SignUp</Link>
+            </Typography>
           </StyledContent>
         </Container>
       </StyledRoot>
