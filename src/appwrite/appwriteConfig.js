@@ -2,12 +2,12 @@ import {Client, Account, Databases} from 'appwrite'
 
 
 const client = new Client();
-const databaseId = "646e217906da20ec76b9";
-const collectionId = "6473c4e017d4b20f0d02"
+const databaseId = process.env.REACT_APP_DATABASE_ID;
+const collectionId = process.env.REACT_APP_COLLECTION_ID;
 
 client
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject('646e214b79f3833cb411');;
+    .setEndpoint(process.env.REACT_APP_SET_ENDPOINT)
+    .setProject(process.env.REACT_APP_SET_PROJECT);
 
 // account 
 export const account = new Account(client)
