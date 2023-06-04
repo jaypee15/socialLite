@@ -1,33 +1,33 @@
 import React from 'react';
 
-import Tweet from '@/components/Tweet';
-import CreateTweetForm from '@/components/CreateTweetForm';
+import Post from '../post/Post';
+import CreatePostForm from '../create-post-form/CreatePostForm';
 
-export default function Feed({ tweets: tweetsProp }) {
-  const [tweets, setTweets] = React.useState(tweetsProp);
+export default function Timeline({ posts: postsProp }) {
+  const [posts, setPosts] = React.useState(postsProp);
 
-  const onTweetCreated = (newTweet) => {
-    setTweets((currTweets) => [newTweet, ...currTweets]);
+  const onPostCreated = (newPost) => {
+    setPosts((currentPosts) => [newPost, ...currentPosts]);
   };
 
-  const onTweetRemoved = (tweetToRemove) => {
-    setTweets((currTweets) =>
-      currTweets.filter((tweet) => tweet.$id !== tweetToRemove.$id)
+  const onPostRemoved = (postToRemove) => {
+    setPosts((currentPosts) =>
+      currentPosts.filter((post) => post.$id !== postToRemove.$id)
     );
   };
 
-  const onLikeTweetCallback = (newTweet) => {
-    setTweets((currTweets) =>
-      currTweets.map((tweet) => {
-        if (tweet.$id === newTweet.$id) {
-          return newTweet;
+  const onLikePostCallback = (newPost) => {
+    setPosts((currentPosts) =>
+      currentPosts.map((post) => {
+        if (post.$id === newPost.$id) {
+          return newPost;
         }
-        return tweet;
+        return post;
       })
     );
   };
 
-  const tweetsSortedByCreatedDate = tweets.sort(function (a, b) {
+  const postsSortedByCreatedDate = posts.sort(function (a, b) {
     return new Date(b.$createdAt) - new Date(a.$createdAt);
   });
 
@@ -57,18 +57,18 @@ export default function Feed({ tweets: tweetsProp }) {
 
       <hr className="border-gray-600" />
 
-      <CreateTweetForm onTweetCreated={onTweetCreated} />
+      <CreatePostForm onPostCreated={onPostCreated} />
 
       <hr className="border-gray-800 border-2" />
 
       <div></div>
 
-      {tweetsSortedByCreatedDate?.map((tweet) => (
-        <Tweet
-          onLikeTweetCallback={onLikeTweetCallback}
-          onTweetRemoved={onTweetRemoved}
-          key={tweet.$id}
-          tweet={tweet}
+      {postsSortedByCreatedDate?.map((post) => (
+        <Post
+          onLikePostCallback={onLikePostCallback}
+          onPostRemoved={onPostRemoved}
+          key={post.$id}
+          post={post}
         />
       ))}
 

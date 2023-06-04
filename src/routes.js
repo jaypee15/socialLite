@@ -19,25 +19,25 @@ export default function Router() {
       path: '/home',
       element: <HomeLayout />,
       children: [
-        { element: <Navigate to="/Home" />, index: true },
-        { path: 'app', element: <HomePage /> },
-        { path: 'profile', element: <ProfilePage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { element: <Navigate to="/home/app" />, index: true },
+        { path: '/app', element: <HomePage /> },
+        { path: '/profile', element: <ProfilePage /> },
+        { path: '/products', element: <ProductsPage /> },
+        { path: '/blog', element: <BlogPage /> },
       ],
     },
     {
-      path: 'Signin',
+      path: '/Signin',
       element: <SigninPage />,
     },
     {
-      path: 'SignUp',
+      path: '/SignUp',
       element: <SignupPage />,
     },
     {
       element: <SimpleLayout />,
       children: [
-        { element: <Navigate to="/Home" />, index: true },
+        { element: <Navigate to="/home/app" />, index: true },
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],

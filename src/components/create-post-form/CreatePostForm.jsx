@@ -1,13 +1,12 @@
 import React from 'react';
-import { Databases, ID } from 'appwrite';
+import { databases, id } from '../../appwrite/appwriteConfig';
 
-import appwriteClient from '@/libs/appwrite';
-import useUser from '@/hooks/useUser';
+import useUser from '../../hooks/useUser';
 
-export default function CreateTweetForm({ onTweetCreated }) {
+export default function CreatePostForm({ onPostCreated }) {
   const { currentAccount } = useUser();
 
-  const [tweetForm, setTweetForm] = React.useState({
+  const [postForm, setPostForm] = React.useState({
     text: '',
   });
 
@@ -15,27 +14,26 @@ export default function CreateTweetForm({ onTweetCreated }) {
     const {
       target: { name, value },
     } = event;
-    setTweetForm((currTweetForm) => ({ ...currTweetForm, [name]: value }));
+    setPostForm((currentPostForm) => ({ ...currentPostForm, [name]: value }));
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const databases = new Databases(appwriteClient);
 
-      const tweet = await databases.createDocument(
-        process.env.NEXT_PUBLIC_DATABASE,
-        process.env.NEXT_PUBLIC_TWEETS_COLLECTION,
-        ID.unique(),
+      const post = await databases.createDocument(
+        process.env.REACT_APP_DATABASE_ID,
+        process.env.REACT_APP_COLLECTION_ID,
+        id.unique(),
         {
           useremail: currentAccount.email,
           username: currentAccount.name,
-          text: tweetForm.text,
+          text: postForm.text,
         }
       );
-      setTweetForm({text: ''})
-      onTweetCreated(tweet);
+      setPostForm({text: ''})
+      onPostCreated(post);
     } catch (error) {
       console.log(error);
     }
@@ -47,12 +45,12 @@ export default function CreateTweetForm({ onTweetCreated }) {
         <div className="flex-1 px-6 pt-2 mt-2">
           <textarea
             onChange={onChangeInput}
-            value={tweetForm.text}
+            value={postForm.text}
             name="text"
             className=" bg-transparent outline-none focus:ring-1 focus:ring-gray-800 rounded-lg p-3 text-white placholder:text-gray-400 font-medium text-lg w-full"
             rows="2"
             cols="50"
-            placeholder="What's happening?"
+            placeholder="What's on your mind?"
           ></textarea>
         </div>
       </div>
@@ -146,7 +144,7 @@ export default function CreateTweetForm({ onTweetCreated }) {
             type="submit"
             className="bg-blue-400 mt-5 hover:bg-blue-600 text-white font-bold py-2 px-8 rounded-full mr-8 float-right"
           >
-            Tweet
+            Post
           </button>
         </div>
       </div>

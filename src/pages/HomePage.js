@@ -21,7 +21,7 @@ export default function HomePage() {
           Feed
         </Typography>
 
-        <Feed />
+        <Feed/>
         
 
         
