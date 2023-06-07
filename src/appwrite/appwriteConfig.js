@@ -1,9 +1,11 @@
-import {Client, Account, Databases, Functions, ID} from 'appwrite'
+import {Client, Account, Databases, Functions, ID, Storage} from 'appwrite'
 
 
 const client = new Client();
 const databaseId = process.env.REACT_APP_DATABASE_ID;
 const collectionId = process.env.REACT_APP_COLLECTION_ID;
+
+
 
 
 
@@ -21,7 +23,10 @@ export const databases = new Databases(client, databaseId)
 export const posts = await databases.listDocuments(databaseId, collectionId)
 
 //functions 
-export const functions = new Functions(Client);
+export const functions = new Functions(client);
 
 //id
 export const id = ID
+
+//storage
+export const storage = new Storage(client);

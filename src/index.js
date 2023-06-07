@@ -5,8 +5,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
-// ----------------------------------------------------------------------
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
 
+
+// ----------------------------------------------------------------------
+TimeAgo.addDefaultLocale(en)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(<App />);

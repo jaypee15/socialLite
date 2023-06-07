@@ -60,7 +60,7 @@ export default function SigninPage() {
     e.preventDefault()
     try{
       await account.createEmailSession(user.email, user.password)
-      navigate("/home/profile")
+      navigate("/profile")
     } catch (error) {
       console.log(error);
     }

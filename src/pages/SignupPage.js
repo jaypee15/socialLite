@@ -72,7 +72,7 @@ const signupUser = async(e) => {
     function(response) {
       //signup successfull
       console.log(response);
-      navigate("/home/profile")
+      navigate("/profile")
 
     },
     function(error) {

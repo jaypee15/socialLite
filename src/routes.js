@@ -16,22 +16,22 @@ import HomePage from './pages/HomePage';
 export default function Router() {
   const routes = useRoutes([
     {
-      path: '/home',
+      path: '/',
       element: <HomeLayout />,
       children: [
-        { element: <Navigate to="/home/app" />, index: true },
-        { path: '/app', element: <HomePage /> },
-        { path: '/profile', element: <ProfilePage /> },
-        { path: '/products', element: <ProductsPage /> },
-        { path: '/blog', element: <BlogPage /> },
+        { element: <Navigate to="/app" />, index: true },
+        { path: 'app', element: <HomePage /> },
+        { path: 'profile', element: <ProfilePage /> },
+        { path: 'products', element: <ProductsPage /> },
+        { path: 'blog', element: <BlogPage /> },
       ],
     },
     {
-      path: '/Signin',
+      path: '/signin',
       element: <SigninPage />,
     },
     {
-      path: '/SignUp',
+      path: '/signUp',
       element: <SignupPage />,
     },
     {

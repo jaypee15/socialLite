@@ -1,6 +1,6 @@
 import React from 'react';
 import { account } from '../appwrite/appwriteConfig';
-import { useRoutes } from 'react-router-dom';
+
 import { FETCH_STATUS } from '../utils/constants';
 
 
@@ -9,7 +9,7 @@ export default function useUser() {
   const [accountStatus, setAccountStatus] = React.useState(
     FETCH_STATUS.LOADING
   );
-  const route = useRoutes();
+  // const route = useRoutes();
 
   const getSession = async () => {
     setAccountStatus(FETCH_STATUS.LOADING);
@@ -28,11 +28,11 @@ export default function useUser() {
     }
   };
 
-  const logout = async () => {
-    const promise = await account.deleteSession('current');
-    setCurrentAccount(null)
-    route.push('/signin')
-  };
+  // const logout = async () => {
+  //   const promise = await account.deleteSession('current');
+  //   setCurrentAccount(null)
+  //   route.push('/signin')
+  // };
 
   React.useEffect(() => {
     getSession();
@@ -41,6 +41,6 @@ export default function useUser() {
   return {
     currentAccount,
     isLoadingAccount: accountStatus === FETCH_STATUS.LOADING,
-    logout,
+    // logout,
   };
 }

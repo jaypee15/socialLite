@@ -4,16 +4,10 @@ const sdk = require("node-appwrite");
 module.exports = async function (req, res) {
   const client = new sdk.Client();
 
-  // You can remove services you don't use
-  const account = new sdk.Account(client);
-  const avatars = new sdk.Avatars(client);
   const database = new sdk.Databases(client);
-  const functions = new sdk.Functions(client);
-  const health = new sdk.Health(client);
-  const locale = new sdk.Locale(client);
-  const storage = new sdk.Storage(client);
-  const teams = new sdk.Teams(client);
-  const users = new sdk.Users(client);
+  const { postId, likes } = JSON.parse(req.payload)
+
+ 
 
   if (
     !req.variables['APPWRITE_FUNCTION_ENDPOINT'] ||
@@ -28,7 +22,21 @@ module.exports = async function (req, res) {
       .setSelfSigned(true);
   }
 
-  res.json({
-    areDevelopersAwesome: true,
-  });
+  let newPost = {}
+  if (postId) {
+    try {
+      newPost = await database.updateDocument(
+        process.env.REACT_APP_SET_PROJECT,
+        process.env.REACT_APP_COLLECTION_ID,
+        postId,
+        { likes }
+      );
+      console.log('NEW POST: ', newPost)
+      return res.json({ data: newPost });
+    } catch (error) {
+      console.log(error)
+      return res.json({error})
+    }
+  }
+      
 };
